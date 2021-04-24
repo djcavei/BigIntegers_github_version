@@ -19,8 +19,7 @@ public:
     BigIntegers operator+(const BigIntegers& rhs) const;
     BigIntegers& operator=(const BigIntegers& rhs);
     ~BigIntegers();
-    string ss;
 private:
-    vector<unsigned long long> numb;
+    string ss;
 };
 #endif //BIGINTEGERS_GITHUB_VERSION_BIGINTEGERS_H

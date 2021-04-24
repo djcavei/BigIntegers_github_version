@@ -6,13 +6,15 @@
 using namespace std;
 
 int main() {
-    string s = "1231236471274617246712647123878237482734829348273948293487293487296127";
-    string s2 = "83283912831972381792387129381729381273918273918";
+    string s = "3821983129381724819487394872394823749";
+    string s2 = "43273472734723948237987589387293487293487239";
     BigIntegers left(s);
     BigIntegers right(s2);
     BigIntegers result;
-    result = left + right;
     left.print();
     right.print();
+    result = left + right;
+    cout<<"Il risultato e'"<<endl;
+    result.print();
     return 0;
 }

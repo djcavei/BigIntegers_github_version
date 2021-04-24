@@ -9,46 +9,43 @@
 #include <sstream>
 
 using namespace std;
+string map {"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLxxxxxxxxxx0123456789klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV0123456789012345678"};
+
 
 BigIntegers::BigIntegers() {ss = "";};
 
 BigIntegers::BigIntegers(string &s) {
     ss = s;
-    istringstream buffer{s};
-    unsigned long long n;
-    char c;
-    while(!buffer.eof()) {
-        string cell;
-        for(int j = 0; j < 19 && !buffer.eof(); j++) {
-            buffer>>c;
-            cell.push_back(c);
-            if(buffer.eof()) cell.pop_back();
-        }
-        istringstream go{cell};
-        go>>n;
-        numb.push_back(n);
-    }
 };
 BigIntegers BigIntegers::operator+(const BigIntegers& rhs) const{
     BigIntegers res;
-    unsigned long long temp{};
-    bool resto = false;
-
-    for(int i = numb.size()-1; i >= 0;i++) {
-        for(int j = rhs.numb.size()-1; j >= 0; j++) {
-
-        }
+    bool remainder = false;
+    char n;
+    int i = ss.size() - 1, j = rhs.ss.size() - 1;
+    while(i >= 0 and j >= 0) {
+        n = ss[i--] + rhs.ss[j--] + remainder;
+        n > 105 ? remainder = true : remainder = false;
+        res.ss.insert(res.ss.begin(), map[n]);
     }
+    while(i >= 0) {
+        res.ss.insert(res.ss.begin(), map[ss[i--]+remainder]);
+        remainder = false;
+    }
+    while(j >= 0) {
+        res.ss.insert(res.ss.begin(), map[rhs.ss[j--]+remainder]);
+        remainder = false;
+    }
+    if(remainder) res.ss.insert(res.ss.begin(), '1');
+    return res;
 };
 BigIntegers::~BigIntegers() {
-    for(int i=0; i < numb.size();i++) numb.pop_back();
+    ss.erase(0, ss.size());
 };
 BigIntegers& BigIntegers::operator=(const BigIntegers& rhs) {
-    delete this;
-    for(unsigned long long i : rhs.numb) numb.push_back(i);
+    ss = rhs.ss; //todo è banale
     return *this;
 };
 void BigIntegers::print() {
-    for(unsigned long long elem : numb) cout<<elem;
+    cout<<ss;
     cout<<endl;
 };
