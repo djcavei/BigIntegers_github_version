@@ -16,10 +16,14 @@ public:
     BigIntegers();
     BigIntegers(string& s);
     void print();
-    BigIntegers operator+(const BigIntegers& rhs) const;
+    BigIntegers operator+(BigIntegers& rhs);
+    BigIntegers operator-(BigIntegers& rhs);
     BigIntegers& operator=(const BigIntegers& rhs);
     ~BigIntegers();
 private:
+    bool sign;
     string ss;
+    string map_add;
+    string map_sub;
 };
 #endif //BIGINTEGERS_GITHUB_VERSION_BIGINTEGERS_H
