@@ -10,7 +10,8 @@
 
 using namespace std;
 
-BigIntegers::BigIntegers() {ss = "";
+BigIntegers::BigIntegers() {
+    ss = "";
     map_add = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLxxxxxxxxxx0123456789klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV0123456789012345678";
     map_sub = "0123456789";
     sign = false;
@@ -22,6 +23,8 @@ BigIntegers::BigIntegers(string &s) {
     map_sub = "0123456789";
     ss[0] == '-' ? sign = true : sign = false;
 };
+
+//todo operatore piu ++++++
 BigIntegers BigIntegers::operator+(BigIntegers& rhs){
     BigIntegers res;
     bool remainder = false;
@@ -51,16 +54,17 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs){
             ss.insert(ss.begin(), '-');
             rhs.ss.insert(rhs.ss.begin(), '-');
         }
-        return res;
     } else {
         //parte la sub
     }
+    return res;
 };
+
+//todo operatore meno ----
 BigIntegers BigIntegers::operator-(BigIntegers &rhs) {
     BigIntegers res;
     BigIntegers left, right;
-    bool insert_final;
-
+    bool insert_final = false;
     bool remainder = false;
     int n;
     if(sign == rhs.sign) {
@@ -71,22 +75,20 @@ BigIntegers BigIntegers::operator-(BigIntegers &rhs) {
         while(i >= 0 and j >= 0) {
             n = ss[i] - rhs.ss[j] - remainder;
             n < 0 ? remainder = true : remainder = false;
-            res.ss.insert(res.ss.begin(), map_sub[n + (10*(ss[i--] < rhs.ss[j--]))]);
+            res.ss.insert(res.ss.begin(), map_sub[n + (10*(ss[i--] - remainder < rhs.ss[j--]))]);
         }
         while (i >= 0) {
-            res.ss.insert(res.ss.begin(), map_add[ss[i--] - remainder]);
-            remainder = false;
-        }
-        while (j >= 0) {
-            res.ss.insert(res.ss.begin(), map_add[rhs.ss[j--] - remainder]);
+            res.ss.insert(res.ss.begin(), map_sub[ss[i--] - '0' - remainder]);
             remainder = false;
         }
     }
     return res;
 }
+
 BigIntegers::~BigIntegers() {
     ss.erase(0, ss.size());
 };
+
 BigIntegers& BigIntegers::operator=(const BigIntegers& rhs) {
     ss = rhs.ss;
     return *this;
