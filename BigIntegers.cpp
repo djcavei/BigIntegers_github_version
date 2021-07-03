@@ -122,13 +122,13 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs){
     return res;
 }*/
 
-BigIntegers BigIntegers::operator-(BigIntegers &rhs) {
+BigIntegers BigIntegers::operator-(BigIntegers &rhs) const{
     BigIntegers res, big = *this, small = rhs;
     if(sign == rhs.sign) {
         int i{}, j{}, max = 1;
         if(sign) {
-            ss.erase(ss.begin());
-            rhs.ss.erase(rhs.ss.begin());
+            big.ss.erase(big.ss.begin());
+            small.ss.erase(small.ss.begin());
         }
         if(rhs.ss.size() > ss.size()) max = 2;
         else if(ss.size() == rhs.ss.size()) {
@@ -145,6 +145,7 @@ BigIntegers BigIntegers::operator-(BigIntegers &rhs) {
         }
         if(max == 2) swap(big, small);
         res.sign = big.sign;
+        if(max == 2) big.sign ? res.sign = false : res.sign = true;
         i = big.ss.size() - 1, j = small.ss.size() - 1;
         int n{};
         bool remainder = false;
@@ -162,12 +163,11 @@ BigIntegers BigIntegers::operator-(BigIntegers &rhs) {
         if (res.sign) res.ss.insert(res.ss.begin(), '-');
     }
     else {
-        big.sign ? small.sign = true : 0;
+        big.sign ? small.sign = true : small.sign = false;
         if(small.sign) small.ss.insert(small.ss.begin(), '0');
+        else small.ss.erase(small.ss.begin());
         res = big + small;
     }
-    if(sign) ss.insert(ss.begin(), '-');
-    if(rhs.sign) rhs.ss.insert(rhs.ss.begin(), '-');
     return res;
 }
 

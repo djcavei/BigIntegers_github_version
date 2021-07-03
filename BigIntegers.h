@@ -17,7 +17,7 @@ public:
     BigIntegers(string& s);
     void print();
     BigIntegers operator+(BigIntegers& rhs);
-    BigIntegers operator-(BigIntegers& rhs);
+    BigIntegers operator-(BigIntegers& rhs)const;
 private:
     bool sign;
     string ss;
