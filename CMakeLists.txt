@@ -3,4 +3,4 @@ project(BigIntegers_github_version)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(BigIntegers_github_version main.cpp BigIntegers.h BigIntegers.cpp)
+add_executable(BigIntegers_github_version main.cpp BigIntegers.cpp BigIntegers.h)

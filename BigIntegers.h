@@ -18,12 +18,9 @@ public:
     void print();
     BigIntegers operator+(BigIntegers& rhs);
     BigIntegers operator-(BigIntegers& rhs);
-    BigIntegers& operator=(const BigIntegers& rhs);
     ~BigIntegers();
 private:
     bool sign;
     string ss;
-    string map_add;
-    string map_sub;
 };
 #endif //BIGINTEGERS_GITHUB_VERSION_BIGINTEGERS_H
