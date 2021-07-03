@@ -54,13 +54,16 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs){
             rhs.ss.insert(rhs.ss.begin(), '-');
         }
     } else {
-        //parte la sub
+        BigIntegers aux = rhs;
+        aux.sign = sign;
+        aux.sign ? aux.ss.insert(aux.ss.begin(), '-') : aux.ss.erase(aux.ss.begin());
+        res = *this - aux;
     }
     return res;
 };
 
 //todo operatore meno ----
-BigIntegers BigIntegers::operator-(BigIntegers &rhs) {
+/*BigIntegers BigIntegers::operator-(BigIntegers &rhs) {
     BigIntegers res;
     if(sign == rhs.sign){
         cout<<"operation is -"<<endl;
@@ -117,10 +120,55 @@ BigIntegers BigIntegers::operator-(BigIntegers &rhs) {
         res = left + right;
     }
     return res;
-}
+}*/
 
-BigIntegers::~BigIntegers() {
-    ss.erase(0, ss.size());
+BigIntegers BigIntegers::operator-(BigIntegers &rhs) {
+    BigIntegers res, big = *this, small = rhs;
+    if(sign == rhs.sign) {
+        int i{}, j{}, max = 1;
+        if(sign) {
+            ss.erase(ss.begin());
+            rhs.ss.erase(rhs.ss.begin());
+        }
+        if(rhs.ss.size() > ss.size()) max = 2;
+        else if(ss.size() == rhs.ss.size()) {
+            max = 0;
+            while(!max && i < ss.size()) {
+                if(ss.at(i) > rhs.ss.at(i)) max = 1;
+                else if(rhs.ss.at(i) > ss.at(i)) max = 2;
+                ++i;
+            }
+            if(!max) {
+                res.ss.insert(res.ss.begin(), '0');
+                return res;
+            }
+        }
+        if(max == 2) swap(big, small);
+        res.sign = big.sign;
+        i = big.ss.size() - 1, j = small.ss.size() - 1;
+        int n{};
+        bool remainder = false;
+        while (i >= 0 and j >= 0) {
+            n = big.ss[i] - small.ss[j] - remainder;
+            n < 0 ? remainder = true : remainder = false;
+            res.ss.insert(res.ss.begin(), map_sub[n + (10 * (big.ss[i--] - remainder < small.ss[j--]))]);
+        }
+        while (i >= 0) {
+            res.ss.insert(res.ss.begin(), map_sub[big.ss[i--] - '0' - remainder]);
+            remainder = false;
+        }
+        i = 0;
+        while (res.ss.at(i) == '0') res.ss.erase(res.ss.begin());
+        if (res.sign) res.ss.insert(res.ss.begin(), '-');
+    }
+    else {
+        big.sign ? small.sign = true : 0;
+        if(small.sign) small.ss.insert(small.ss.begin(), '0');
+        res = big + small;
+    }
+    if(sign) ss.insert(ss.begin(), '-');
+    if(rhs.sign) rhs.ss.insert(rhs.ss.begin(), '-');
+    return res;
 }
 
 void BigIntegers::print() {
