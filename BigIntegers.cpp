@@ -23,6 +23,45 @@ BigIntegers::BigIntegers(string &s) {
     ss[0] == '-' ? sign = true : sign = false;
 };
 
+//todo operatore --
+BigIntegers& BigIntegers::operator--() {
+    string one("1");
+    BigIntegers eins(one);
+    *this = *this - eins;
+    return *this;
+}
+
+//todo operatore ++
+BigIntegers& BigIntegers::operator++() {
+    string one("1");
+    BigIntegers eins(one);
+    *this = *this + eins;
+    return *this;
+}
+
+BigIntegers BigIntegers::operator%(BigIntegers& rhs) const {
+    BigIntegers div = *this, res;
+    while(div.sign == sign) {
+        sign == rhs.sign ? div = div - rhs : div = div + rhs;
+        if(div.sign == sign) ++res;
+    }
+    if(div.sign) div.ss.erase(div.ss.begin());
+    div.sign = false;
+    return div;
+}
+
+
+//todo operatore diviso ///////
+BigIntegers BigIntegers::operator/(BigIntegers& rhs) const {
+    BigIntegers div = *this, res;
+    while(div.sign == sign) {
+        sign == rhs.sign ? div = div - rhs : div = div + rhs;
+        if(div.sign == sign) ++res;
+    }
+    res.sign = (sign!=rhs.sign);
+    if(res.sign) res.ss.insert(res.ss.begin(), '-');
+    return res;
+}
 
 //todo operatore per *****
 BigIntegers BigIntegers::operator*(BigIntegers& rhs) const{

@@ -19,6 +19,10 @@ public:
     BigIntegers operator+(BigIntegers& rhs);
     BigIntegers operator-(BigIntegers& rhs)const;
     BigIntegers operator*(BigIntegers& rhs)const;
+    BigIntegers operator/(BigIntegers& rhs) const;
+    BigIntegers operator%(BigIntegers& rhs) const;
+    BigIntegers& operator--();
+    BigIntegers& operator++();
 private:
     bool sign;
     string ss;
