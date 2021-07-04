@@ -16,11 +16,11 @@ public:
     BigIntegers();
     BigIntegers(string& s);
     void print();
-    BigIntegers operator+(BigIntegers& rhs);
+    BigIntegers operator+(BigIntegers& rhs)const;
     BigIntegers operator-(BigIntegers& rhs)const;
     BigIntegers operator*(BigIntegers& rhs)const;
-    BigIntegers operator/(BigIntegers& rhs) const;
-    BigIntegers operator%(BigIntegers& rhs) const;
+    BigIntegers operator/(BigIntegers& rhs)const;
+    BigIntegers operator%(BigIntegers& rhs)const;
     BigIntegers& operator--();
     BigIntegers& operator++();
 private:

@@ -7,6 +7,7 @@
 #include <cstring>
 #include <vector>
 #include <sstream>
+#include <exception>
 
 using namespace std;
 
@@ -20,8 +21,11 @@ BigIntegers::BigIntegers() {
 
 BigIntegers::BigIntegers(string &s) {
     ss = s;
-    ss[0] == '-' ? sign = true : sign = false;
-    ss.erase(ss.begin());
+    if(ss[0] == '-') {
+        sign = true;
+        ss.erase(ss.begin());
+    } else sign = false;
+    while(ss.at(0) == '0') ss.erase(ss.begin());
 };
 
 //todo operatore --
@@ -54,9 +58,14 @@ BigIntegers BigIntegers::operator%(BigIntegers& rhs) const {
 //todo operatore diviso ///////
 BigIntegers BigIntegers::operator/(BigIntegers& rhs) const {
     BigIntegers div = *this, res;
-    while(div.sign == sign) {
-        sign == rhs.sign ? div = div - rhs : div = div + rhs;
-        if(div.sign == sign) ++res;
+    if(rhs.ss.at(0) != 0){
+        while(div.sign == sign) {
+            sign == rhs.sign ? div = div - rhs : div = div + rhs;
+            if(div.sign == sign) ++res;
+        }
+    } else {
+        cout<<"Zero divider not defined";
+        throw (uncaught_exception());
     }
     res.sign = (sign!=rhs.sign);
     return res;
@@ -88,7 +97,7 @@ BigIntegers BigIntegers::operator*(BigIntegers& rhs) const{
 }
 
 //todo operatore piu ++++++
-BigIntegers BigIntegers::operator+(BigIntegers& rhs){
+BigIntegers BigIntegers::operator+(BigIntegers& rhs)const{
     BigIntegers res;
     bool remainder = false;
     int n;

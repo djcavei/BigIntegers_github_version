@@ -13,7 +13,7 @@ int main() {
     BigIntegers result;
     left.print();
     right.print();
-    result = left % right;
+    result = left - right;
     cout<<"result is"<<endl;
     result.print();
     return 0;
