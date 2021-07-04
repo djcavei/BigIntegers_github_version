@@ -28,20 +28,36 @@ BigIntegers::BigIntegers(string &s) {
     while(ss.at(0) == '0') ss.erase(ss.begin());
 };
 
-//todo operatore --
+//todo operatore -- prefisso
 BigIntegers& BigIntegers::operator--() {
     string one("1");
     BigIntegers eins(one);
     *this = *this - eins;
     return *this;
 }
+//todo postfisso
+BigIntegers BigIntegers::operator--(int) {
+    string one("1");
+    BigIntegers eins(one), res(*this);
+    *this = *this - eins;
+    return res;
+}
 
-//todo operatore ++
+
+
+//todo operatore ++ prefisso
 BigIntegers& BigIntegers::operator++() {
     string one("1");
     BigIntegers eins(one);
     *this = *this + eins;
     return *this;
+}
+//todo postfisso
+BigIntegers BigIntegers::operator++(int) {
+    string one("1");
+    BigIntegers eins(one), res(*this);
+    *this = *this + eins;
+    return res;
 }
 
 BigIntegers BigIntegers::operator%(BigIntegers& rhs) const {

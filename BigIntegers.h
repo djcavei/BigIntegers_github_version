@@ -23,6 +23,8 @@ public:
     BigIntegers operator%(BigIntegers& rhs)const;
     BigIntegers& operator--();
     BigIntegers& operator++();
+    BigIntegers operator++(int);
+    BigIntegers operator--(int);
 private:
     bool sign;
     string ss;
