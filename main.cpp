@@ -6,8 +6,9 @@
 using namespace std;
 
 int main() {
-    string s = "25";
-    string s2 = "-2";
+    string s = "10";
+    string s2 = "2";
+//    swap(s,s2);
     BigIntegers left(s);
     BigIntegers right(s2);
     BigIntegers result;
@@ -15,6 +16,8 @@ int main() {
     right.print();
     result = left - right;
     cout<<"result is"<<endl;
+    result.print();
+    result = !left;
     result.print();
     return 0;
 }

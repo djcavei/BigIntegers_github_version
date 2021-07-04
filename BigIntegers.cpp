@@ -25,7 +25,12 @@ BigIntegers::BigIntegers(string &s) {
         sign = true;
         ss.erase(ss.begin());
     } else sign = false;
-    while(ss.at(0) == '0') ss.erase(ss.begin());
+    //while(ss.at(0) == '0') ss.erase(ss.begin()); problema per le moltiplicazioni
+};
+
+BigIntegers::BigIntegers(const BigIntegers& that) {
+    ss = that.ss;
+    sign = that.sign;
 };
 
 //todo operatore -- prefisso
@@ -43,8 +48,6 @@ BigIntegers BigIntegers::operator--(int) {
     return res;
 }
 
-
-
 //todo operatore ++ prefisso
 BigIntegers& BigIntegers::operator++() {
     string one("1");
@@ -61,7 +64,7 @@ BigIntegers BigIntegers::operator++(int) {
 }
 
 BigIntegers BigIntegers::operator%(BigIntegers& rhs) const {
-    BigIntegers div = *this, res;
+    BigIntegers div(*this), res;
     while(div.sign == sign) {
         sign == rhs.sign ? div = div - rhs : div = div + rhs;
         if(div.sign == sign) ++res;
@@ -118,6 +121,7 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs)const{
     bool remainder = false;
     int n;
     if(sign == rhs.sign) {
+        res.sign = sign;
         int i = ss.size() - 1, j = rhs.ss.size() - 1;
         while (i >= 0 and j >= 0) {
             n = ss[i--] + rhs.ss[j--] + remainder;
@@ -143,7 +147,7 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs)const{
 
 //todo operatore meno ----
 BigIntegers BigIntegers::operator-(BigIntegers &rhs) const{
-    BigIntegers res, big = *this, small = rhs;
+    BigIntegers res, big(*this), small(rhs);
     if(sign == rhs.sign) {
         int i{}, j{}, max = 1;
         if(rhs.ss.size() > ss.size()) max = 2;
@@ -180,6 +184,16 @@ BigIntegers BigIntegers::operator-(BigIntegers &rhs) const{
     else {
         big.sign ? small.sign = true : small.sign = false;
         res = big + small;
+    }
+    return res;
+}
+
+BigIntegers BigIntegers::operator!() {
+    BigIntegers two(*this), res(*this);
+    --two;
+    while(two.ss.at(0) != '0') {
+        res = res * two;
+        --two;
     }
     return res;
 }

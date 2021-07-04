@@ -15,6 +15,7 @@ class BigIntegers {
 public:
     BigIntegers();
     BigIntegers(string& s);
+    BigIntegers(const BigIntegers& that);
     void print();
     BigIntegers operator+(BigIntegers& rhs)const;
     BigIntegers operator-(BigIntegers& rhs)const;
@@ -25,6 +26,7 @@ public:
     BigIntegers& operator++();
     BigIntegers operator++(int);
     BigIntegers operator--(int);
+    BigIntegers operator!();
 private:
     bool sign;
     string ss;
