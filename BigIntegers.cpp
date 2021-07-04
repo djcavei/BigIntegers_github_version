@@ -21,6 +21,7 @@ BigIntegers::BigIntegers() {
 BigIntegers::BigIntegers(string &s) {
     ss = s;
     ss[0] == '-' ? sign = true : sign = false;
+    ss.erase(ss.begin());
 };
 
 //todo operatore --
@@ -45,7 +46,6 @@ BigIntegers BigIntegers::operator%(BigIntegers& rhs) const {
         sign == rhs.sign ? div = div - rhs : div = div + rhs;
         if(div.sign == sign) ++res;
     }
-    if(div.sign) div.ss.erase(div.ss.begin());
     div.sign = false;
     return div;
 }
@@ -59,7 +59,6 @@ BigIntegers BigIntegers::operator/(BigIntegers& rhs) const {
         if(div.sign == sign) ++res;
     }
     res.sign = (sign!=rhs.sign);
-    if(res.sign) res.ss.insert(res.ss.begin(), '-');
     return res;
 }
 
@@ -85,7 +84,6 @@ BigIntegers BigIntegers::operator*(BigIntegers& rhs) const{
         res = res+temp;
     }
     res.sign = (sign!=rhs.sign);
-    if(res.sign) res.ss.insert(res.ss.begin(), '-');
     return res;
 }
 
@@ -95,10 +93,6 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs){
     bool remainder = false;
     int n;
     if(sign == rhs.sign) {
-        if(sign) {
-            ss.erase(ss.begin());
-            rhs.ss.erase(rhs.ss.begin());
-        }
         int i = ss.size() - 1, j = rhs.ss.size() - 1;
         while (i >= 0 and j >= 0) {
             n = ss[i--] + rhs.ss[j--] + remainder;
@@ -114,15 +108,9 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs){
             remainder = false;
         }
         if (remainder) res.ss.insert(res.ss.begin(), '1');
-        if (sign) {
-            res.ss.insert(res.ss.begin(), '-');
-            ss.insert(ss.begin(), '-');
-            rhs.ss.insert(rhs.ss.begin(), '-');
-        }
     } else {
         BigIntegers aux = rhs;
         aux.sign = sign;
-        aux.sign ? aux.ss.insert(aux.ss.begin(), '-') : aux.ss.erase(aux.ss.begin());
         res = *this - aux;
     }
     return res;
@@ -133,10 +121,6 @@ BigIntegers BigIntegers::operator-(BigIntegers &rhs) const{
     BigIntegers res, big = *this, small = rhs;
     if(sign == rhs.sign) {
         int i{}, j{}, max = 1;
-        if(sign) {
-            big.ss.erase(big.ss.begin());
-            small.ss.erase(small.ss.begin());
-        }
         if(rhs.ss.size() > ss.size()) max = 2;
         else if(ss.size() == rhs.ss.size()) {
             max = 0;
@@ -167,18 +151,16 @@ BigIntegers BigIntegers::operator-(BigIntegers &rhs) const{
         }
         i = 0;
         while (res.ss.at(i) == '0') res.ss.erase(res.ss.begin());
-        if (res.sign) res.ss.insert(res.ss.begin(), '-');
     }
     else {
         big.sign ? small.sign = true : small.sign = false;
-        if(small.sign) small.ss.insert(small.ss.begin(), '0');
-        else small.ss.erase(small.ss.begin());
         res = big + small;
     }
     return res;
 }
 
 void BigIntegers::print() {
+    if(sign) cout<<'-';
     cout<<ss;
     cout<<endl;
 }
