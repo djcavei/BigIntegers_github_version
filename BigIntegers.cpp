@@ -11,7 +11,7 @@
 
 using namespace std;
 
-string map_add = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLxxxxxxxxxx0123456789klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV0123456789012345678";
+string map_add = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLxxxxxxxxxx0123456789klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV01234567890123456789";
 string map_sub = "0123456789";
 
 BigIntegers::BigIntegers() {
