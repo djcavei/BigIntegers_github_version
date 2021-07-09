@@ -19,5 +19,6 @@ int main() {
     result.print();
     result = !left;
     result.print();
+    result = left^3;
     return 0;
 }
