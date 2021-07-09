@@ -22,6 +22,7 @@ public:
     BigIntegers operator*(BigIntegers& rhs)const;
     BigIntegers operator/(BigIntegers& rhs)const;
     BigIntegers operator%(BigIntegers& rhs)const;
+    BigIntegers operator^(int n) const;
     BigIntegers& operator--();
     BigIntegers& operator++();
     BigIntegers operator++(int);

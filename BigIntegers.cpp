@@ -145,6 +145,20 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs)const{
     return res;
 };
 
+BigIntegers BigIntegers::operator^(int n) const {
+    BigIntegers res(*this), multi(*this);
+    if(n) {
+        while (n > 1) {
+            res = res * multi;
+            n--;
+        }
+    } else {
+        res.ss = "1";
+        res.sign = false;
+    }
+    return res;
+}
+
 //todo operatore meno ----
 BigIntegers BigIntegers::operator-(BigIntegers &rhs) const{
     BigIntegers res, big(*this), small(rhs);
