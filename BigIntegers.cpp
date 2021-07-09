@@ -9,6 +9,7 @@
 #include <sstream>
 #include <exception>
 
+
 using namespace std;
 
 string map_add = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLxxxxxxxxxx01234567890lmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV01234567890123456789";
@@ -78,7 +79,7 @@ BigIntegers BigIntegers::operator%(BigIntegers& rhs) const {
 BigIntegers BigIntegers::operator/(BigIntegers& rhs) const {
     BigIntegers div = *this, res;
     if(rhs.ss.at(0) != 0){
-        while(div.sign == sign) {
+        while(div.sign == sign && div.ss[0] != '0') {
             sign == rhs.sign ? div = div - rhs : div = div + rhs;
             if(div.sign == sign) ++res;
         }
@@ -132,7 +133,7 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs)const{
         }
         while (i >= 0) {
             res.ss.insert(res.ss.begin(), map_add[ss[i] + remainder]);
-            remainder = true * (ss[i--] == 58);
+            remainder = true * (ss[i--] + remainder == 58);
         }
         while (j >= 0) {
             res.ss.insert(res.ss.begin(), map_add[rhs.ss[j] + remainder]);

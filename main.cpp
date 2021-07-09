@@ -6,19 +6,20 @@
 using namespace std;
 
 int main() {
-    string s = "10";
-    string s2 = "2";
+    string s = "2";
+    string s2 = "9999999";
 //    swap(s,s2);
     BigIntegers left(s);
     BigIntegers right(s2);
     BigIntegers result;
-    left.print();
-    right.print();
-    result = left - right;
     cout<<"result is"<<endl;
+    result = left^64;
     result.print();
-    result = !left;
+    result = result/left;
     result.print();
-    result = left^3;
+    /*result = left^64;
+    result.print();
+    result = result/right;
+    result.print();*/
     return 0;
 }
