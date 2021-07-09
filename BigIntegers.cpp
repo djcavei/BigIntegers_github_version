@@ -11,7 +11,7 @@
 
 using namespace std;
 
-string map_add = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLxxxxxxxxxx0123456789klmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV0123456789012345678";
+string map_add = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLxxxxxxxxxx01234567890lmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV01234567890123456789";
 string map_sub = "0123456789";
 
 BigIntegers::BigIntegers() {
@@ -96,6 +96,8 @@ BigIntegers BigIntegers::operator*(BigIntegers& rhs) const{
     int remainder{}, counter{};
     for(int i = rhs.ss.size()-1; i >= 0 && rhs.ss.at(i) != '-'; i--) {
         string aux{};
+        if(rhs.ss == "33")
+            cout<<endl;
         for(int j = ss.size()-1; j >= 0 && ss.at(j) != '-'; j--) {
             char x = ((ss.at(j) - '0')*(rhs.ss.at(i)-'0'))+remainder;
             remainder = (int)x/10;
@@ -129,12 +131,12 @@ BigIntegers BigIntegers::operator+(BigIntegers& rhs)const{
             res.ss.insert(res.ss.begin(), map_add[n]);
         }
         while (i >= 0) {
-            res.ss.insert(res.ss.begin(), map_add[ss[i--] + remainder]);
-            remainder = false;
+            res.ss.insert(res.ss.begin(), map_add[ss[i] + remainder]);
+            remainder = true * (ss[i--] == 58);
         }
         while (j >= 0) {
-            res.ss.insert(res.ss.begin(), map_add[rhs.ss[j--] + remainder]);
-            remainder = false;
+            res.ss.insert(res.ss.begin(), map_add[rhs.ss[j] + remainder]);
+            remainder = true * (rhs.ss[j--] + remainder == 58);
         }
         if (remainder) res.ss.insert(res.ss.begin(), '1');
     } else {
@@ -189,8 +191,9 @@ BigIntegers BigIntegers::operator-(BigIntegers &rhs) const{
             res.ss.insert(res.ss.begin(), map_sub[n + (10 * (big.ss[i--] - remainder < small.ss[j--]))]);
         }
         while (i >= 0) {
-            res.ss.insert(res.ss.begin(), map_sub[big.ss[i--] - '0' - remainder]);
-            remainder = false;
+            n = big.ss[i] - remainder -'0';
+            n < 0 ? remainder = true : remainder = false;
+            res.ss.insert(res.ss.begin(), map_sub[n + (10 * (big.ss[i--] - remainder -'0' < 0))]);
         }
         i = 0;
         while (res.ss.at(i) == '0') res.ss.erase(res.ss.begin());
